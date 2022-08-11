@@ -27,6 +27,7 @@ namespace MagicVilla_VillaAPI.Controllers
         }
 
         [HttpGet]
+
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<APIResponse>> GetVillaNumbers()
         {
@@ -34,7 +35,7 @@ namespace MagicVilla_VillaAPI.Controllers
             {
                 _logger.LogInformation("getting villas");
 
-                _response.Result = await _villaNumberRepo.GetAll();
+                _response.Result = await _villaNumberRepo.GetAll(includeProps: "Villa");
                 _response.StatusCode = HttpStatusCode.OK;
                 return Ok(_response);
             }
