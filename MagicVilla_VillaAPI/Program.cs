@@ -3,6 +3,7 @@ using MagicVilla_VillaAPI.Data;
 using MagicVilla_VillaAPI.Repo;
 using MagicVilla_VillaAPI.Repo.IRepo;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -20,7 +21,15 @@ builder.Services.AddAutoMapper(typeof(MappingConfig));
 builder.Services.AddScoped<IVillaRepo, VillaRepo>();
 builder.Services.AddScoped<IVillaNumberRepo, VillaNumberRepo>();
 builder.Services.AddScoped<IUserRepo, UserRepo>();
-builder.Services.AddControllers().AddNewtonsoftJson().AddXmlDataContractSerializerFormatters();
+builder.Services.AddControllers(o =>
+{
+    o.CacheProfiles.Add("Default30", new CacheProfile
+    {
+        Duration = 30
+    });
+
+}).AddNewtonsoftJson().AddXmlDataContractSerializerFormatters();
+builder.Services.AddResponseCaching();
 
 builder.Services.AddApiVersioning(o =>
 {

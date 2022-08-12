@@ -19,7 +19,7 @@ namespace MagicVilla_Web.Services
             {
                 ApiType = SD.ApiType.POST,
                 Data = dto,
-                URL = villaUrl + "/api/VillaAPI/login"
+                URL = villaUrl + "/api/v1/VillaAPI/login"
             });
         }
         public Task<T> RegisterAsync<T>(RegistrationRequestDTO dto)
@@ -28,7 +28,7 @@ namespace MagicVilla_Web.Services
             {
                 ApiType = SD.ApiType.POST,
                 Data = dto,
-                URL = villaUrl + "/api/VillaAPI/register"
+                URL = villaUrl + "/api/v1/VillaAPI/register"
             });
         }
     }
