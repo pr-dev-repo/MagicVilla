@@ -2,6 +2,7 @@
 using MagicVilla_VillaAPI.Models;
 using MagicVilla_VillaAPI.Models.Dto;
 using MagicVilla_VillaAPI.Repo.IRepo;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
@@ -10,6 +11,7 @@ namespace MagicVilla_VillaAPI.Controllers
 {
     [Route("api/VillaAPI")] // code route hard to avoid maintanance issues
     [ApiController]
+    [Authorize]
     public class VillaAPIController : ControllerBase
     {
         private readonly ILogger<VillaAPIController> _logger;
@@ -31,7 +33,7 @@ namespace MagicVilla_VillaAPI.Controllers
         {
             try
             {
-                _logger.LogInformation("getting villas");
+                _logger.LogInformation("getting villas ...");
 
                 _response.Result = await _villaRepo.GetAll();
                 _response.StatusCode = HttpStatusCode.OK;
@@ -84,6 +86,7 @@ namespace MagicVilla_VillaAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [Authorize(Roles ="Admin")]
         public async Task<ActionResult<APIResponse>> CreateVilla([FromBody] VillaCreateDTO createDTO)
         {
             try
@@ -119,6 +122,7 @@ namespace MagicVilla_VillaAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<APIResponse>> DeleteVilla(int id)
         {
             try
