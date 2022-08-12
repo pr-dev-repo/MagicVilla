@@ -9,9 +9,10 @@ using System.Net;
 
 namespace MagicVilla_VillaAPI.Controllers
 {
-    [Route("api/VillaAPI")] // code route hard to avoid maintanance issues
+    [Route("api/v{version:apiVersion}/VillaAPI")]
     [ApiController]
     [Authorize]
+    [ApiVersion("1.0")]
     public class VillaAPIController : ControllerBase
     {
         private readonly ILogger<VillaAPIController> _logger;
